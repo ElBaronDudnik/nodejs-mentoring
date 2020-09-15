@@ -1,6 +1,6 @@
-import { csv } from "csvtojson";
-import * as fs from "fs";
-import { pipeline } from "stream";
+import { csv } from 'csvtojson';
+import * as fs from 'fs';
+import { pipeline } from 'stream';
 
 pipeline(
     fs.createReadStream('csv/csvtojson.csv'),
