@@ -1,2 +1,4 @@
 **/node-modules
 csv
+*.js
+*.js.map
