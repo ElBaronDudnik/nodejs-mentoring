@@ -1,6 +1,6 @@
-import * as express from 'express';
+import express from 'express';
 import * as bodyParser from 'body-parser';
-import routes from './src/routes';
+import routes from './routes/routes';
 
 const app = express();
 const port = 3700;

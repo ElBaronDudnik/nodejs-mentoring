@@ -12,6 +12,7 @@ export class User implements UserType {
     password: string;
     age: number;
     isDeleted: boolean;
+
     constructor({ id, login, password, age, isDeleted = false }: UserType) {
         this.id = id;
         this.login = login;
