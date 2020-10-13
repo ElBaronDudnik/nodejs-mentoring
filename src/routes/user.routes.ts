@@ -1,9 +1,9 @@
-import { createUser, deleteUser, getAutoSuggestUsers, getUser, updateUser } from '../controllers/controller';
-import { queryAutoSuggestSchema, paramsSchema, schema, validateSchema, schemaOptionalParams } from '../validators/validators';
+import { createUser, deleteUser, getAutoSuggestUsers, getUser, updateUser } from '../controllers/user.controller';
+import { queryAutoSuggestSchema, paramsSchema, schema, validateSchema, schemaOptionalParams } from '../validators/user.validators';
 import { Application } from 'express';
 import { ContentRequestType } from '../../models/response.type';
 
-const routes = (app: Application): void => {
+const userRoutes = (app: Application): void => {
     app.route('/user')
         .get(validateSchema(queryAutoSuggestSchema, ContentRequestType.Query), getAutoSuggestUsers)
         .post(validateSchema(schema, ContentRequestType.Body), createUser);
@@ -14,4 +14,4 @@ const routes = (app: Application): void => {
         .delete(validateSchema(paramsSchema, ContentRequestType.Params), deleteUser);
 };
 
-export default routes;
+export default userRoutes;
