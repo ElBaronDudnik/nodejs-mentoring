@@ -1,0 +1,8 @@
+[
+  {"id":1,"name":"Roombo","permission":["WRITE", "READ"]},
+  {"id":2,"name":"Photolist","permission":["SHARE", "UPLOAD_FILES"]},
+  {"id":3,"name":"Tazzy","permission":["SHARE", "UPLOAD_FILES"]},
+  {"id":4,"name":"Skyba","permission":["UPLOAD_FILES"]},
+  {"id":5,"name":"Innojam","permission":["DELETE", "SHARE", "UPLOAD_FILES"]},
+  {"id":6,"name":"Innojam","permission":["READ", "DELETE", "SHARE", "UPLOAD_FILES"]}
+]

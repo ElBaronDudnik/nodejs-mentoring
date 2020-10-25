@@ -1,9 +1,9 @@
 import { User } from '../../models/user.type';
 import { Response } from 'express';
 import { ValidatedRequest } from 'express-joi-validation';
-import { UserAutoSuggestSchema, UserParamsSchema, UserCreateRequestSchema, UserUpdateRequestSchema } from '../validators/validators';
+import { UserAutoSuggestSchema, UserParamsSchema, UserCreateRequestSchema, UserUpdateRequestSchema } from '../validators/user.validators';
 import { Op } from 'sequelize';
-import { UserService } from '../services/service';
+import { UserService } from '../services/user.service';
 
 export const createUser = async (req: ValidatedRequest<UserCreateRequestSchema>, res: Response): Promise<void> => {
     const newUser = await UserService.createUser(new User(req.body));

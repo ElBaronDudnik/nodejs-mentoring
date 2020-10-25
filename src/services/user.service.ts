@@ -1,5 +1,6 @@
-import Users from '../database/db';
+
 import { UserType } from '../../models/user.type';
+import { Users } from "../database/db";
 
 export class UserService {
     static async findById(id: number): Promise<Users> {
