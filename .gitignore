@@ -3,3 +3,4 @@ package-lock.json
 .idea
 *.js
 *.js.map
+*.log

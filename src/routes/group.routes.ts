@@ -13,28 +13,36 @@ import {
 } from "../validators/group.validators";
 import { Application } from "express";
 import { ContentRequestType } from "../../models/response.type";
+import {loggingError} from "../middleware/logging.middleware";
 
 const groupRoutes = (app: Application): void => {
     app.route('/group')
-        .get(getAllGroups)
+        .get(
+            getAllGroups,
+            loggingError
+        )
         .post(
             validateGroupSchema(groupSchema,ContentRequestType.Body),
-            createGroup
+            createGroup,
+            loggingError
         );
 
     app.route('/group/:id')
         .get(
             validateGroupSchema(groupParamsSchema, ContentRequestType.Params),
-            getGroupById
+            getGroupById,
+            loggingError
         )
         .put(
             validateGroupSchema(groupParamsSchema, ContentRequestType.Params),
             validateGroupSchema(groupSchemaOptionalParams, ContentRequestType.Body),
-            updateGroup
+            updateGroup,
+            loggingError
         )
         .delete(
             validateGroupSchema(groupParamsSchema, ContentRequestType.Params),
-            deleteGroup
+            deleteGroup,
+            loggingError
         );
 };
 

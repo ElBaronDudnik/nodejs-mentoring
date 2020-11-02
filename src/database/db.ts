@@ -2,6 +2,7 @@ import { DataTypes, Model, Sequelize } from "sequelize";
 import fs from "fs";
 import { User } from "../../models/user.type";
 import { Group } from "../../models/group.type";
+import { logger } from "../logger";
 
 let users;
 let groups;
@@ -11,7 +12,13 @@ const sequelize = new Sequelize('postgres://postgres:FGsltw@Jhn316@localhost:543
 fs.readFile(
     './mock/users_mock_data.json', 'utf8',
     (err: Error, data: string) => {
-        if (err) throw err;
+        if (err) {
+            logger.log({
+                level: 'error',
+                message: 'Error while reading users mock'
+            });
+            throw err;
+        }
         users = JSON.parse(data);
     }
 );
@@ -19,7 +26,13 @@ fs.readFile(
 fs.readFile(
     './mock/groups_mock_data.json', 'utf8',
     (err: Error, data: string) => {
-        if (err) throw err;
+        if (err) {
+            logger.log({
+                level: 'error',
+                message: 'Error while reading groups mock'
+            });
+            throw err;
+        }
         groups = JSON.parse(data);
     }
 );
@@ -104,16 +117,26 @@ UserGroups.init({
 Users.belongsToMany(Groups, { through: UserGroups, foreignKey: 'userId' });
 Groups.belongsToMany(Users, { through: UserGroups, foreignKey: 'groupId' });
 
-sequelize.sync({ })
-    .then(() => groups.forEach((group: Group) => Groups.create(group)))
-    .then(() => users.forEach((user: User) => Users.create(user)))
+sequelize.sync()
+    .then(() => groups.forEach((group: Group) =>
+        Groups.create(group).catch(err => logger.log({ level: 'error', message: err }))))
+    .then(() => users.forEach((user: User) =>
+        Users.create(user).catch(err => logger.log({ level: 'error', message: err }))))
     .then(() => addUsersToGroup(1, [5, 6, 12, 99]))
-    .then(() => addUsersToGroup(2, [7, 11, 25, 29]));
+    .then(() => addUsersToGroup(2, [7, 11, 25, 29]))
+    .catch((err: Error) => logger.log({ level: 'error', message: `Error while filling out the database: ${err}`}));
 
 function addUsersToGroup(groupId, userIds) {
     userIds.forEach(async (id: number) => {
-        const user = await Users.findByPk(id);
-        // @ts-ignore
-        await user.addGroup([groupId]);
+        try {
+            const user = await Users.findByPk(id);
+            // @ts-ignore
+            if (!user.hasGroup([groupId])) {
+                // @ts-ignore
+                await user.addGroup([groupId]);
+            }
+        } catch (err) {
+            logger.log({ level: 'error', message: 'Error while adding Users to group' });
+        }
     });
 }

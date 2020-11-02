@@ -8,6 +8,7 @@ import { AnySchema } from '@hapi/joi';
 import { ValidationErrorItem } from '@hapi/joi';
 import { ContentRequestType } from '../../models/response.type';
 import { IErrors } from '../../models/error.model';
+import { logger } from "../logger";
 
 createValidator({ passError: true });
 
@@ -85,6 +86,7 @@ export const validateSchema = (validatedSchema: AnySchema, type: ContentRequestT
         });
 
         if (error && error.isJoi) {
+            logger.log({ level: 'error', message: ' User validation error'});
             res.status(400).json(errorResponse(error.details));
         } else {
             return next();
