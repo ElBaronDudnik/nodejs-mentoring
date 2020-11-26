@@ -9,6 +9,7 @@ import { ValidationErrorItem } from '@hapi/joi';
 import { ContentRequestType } from '../../models/response.type';
 import { IErrors } from '../../models/error.model';
 import { Permission } from "../../models/group.type";
+import { logger } from "../logger";
 
 createValidator({ passError: true });
 
@@ -66,6 +67,7 @@ export const validateGroupSchema = (validatedSchema: AnySchema, type: ContentReq
         });
 
         if (error && error.isJoi) {
+            logger.log({ level: 'error', message: 'Group validation error'});
             res.status(400).json(errorResponse(error.details));
         } else {
             return next();
