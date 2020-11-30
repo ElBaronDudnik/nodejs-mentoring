@@ -7,7 +7,14 @@ import { logger } from "../logger";
 let users;
 let groups;
 
-const sequelize = new Sequelize('postgres://postgres:FGsltw@Jhn316@localhost:5432/users');
+const sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USERNAME,
+    process.env.PASSWORD_NAME,
+    {
+        host: process.env.DB_HOST,
+        dialect: 'postgres'
+    });
 
 fs.readFile(
     './mock/users_mock_data.json', 'utf8',

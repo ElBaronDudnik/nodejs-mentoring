@@ -3,7 +3,7 @@ import * as bodyParser from 'body-parser';
 import userRoutes from "./routes/user.routes";
 import groupRoutes from "./routes/group.routes";
 import authorizationRoute from './routes/authorization.route';
-import * as cors from 'cors';
+const cors = require('cors');
 import { logger } from "./logger";
 
 const app = express();

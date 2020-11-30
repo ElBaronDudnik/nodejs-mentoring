@@ -4,7 +4,7 @@ import { ValidatedRequest } from 'express-joi-validation';
 import { UserAutoSuggestSchema, UserParamsSchema, UserCreateRequestSchema, UserUpdateRequestSchema } from '../validators/user.validators';
 import { Op } from 'sequelize';
 import { UserService } from '../services/user.service';
-import {loggingInfo} from "../middleware/logging.middleware";
+import { loggingInfo } from "../middleware/logging.middleware";
 
 export const createUser = async (req: ValidatedRequest<UserCreateRequestSchema>, res: Response, next): Promise<void> => {
     const args = new User(req.body);
@@ -38,14 +38,14 @@ export const updateUser = async (req: ValidatedRequest<UserParamsSchema | UserUp
     const id = +req.params.id;
     const user = req.body;
 
-    loggingInfo('updateUser', { id, user});
+    loggingInfo('updateUser', { id, user });
 
     try {
         const updatedUser = await UserService.updateUserById(id, user);
         res.json(updatedUser);
     } catch (err) {
         res.status(400).end('No user with such id');
-        next({ name: 'updateUser', args: { id, user}, message: err });
+        next({ name: 'updateUser', args: { id, user }, message: err });
     }
 };
 
